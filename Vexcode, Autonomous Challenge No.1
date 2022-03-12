@@ -1,0 +1,71 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       Autonomous Challenge No.1                                 */
+/*    Author:       D.L.                                                      */
+/*    Created:      Feb 26 2022                                               */
+/*    Description:  Designed to acccomplish an autonomous challenger (see     */
+/*                  down for details)                                         */
+/*----------------------------------------------------------------------------*/
+ 
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                   
+// Drivetrain           drivetrain    1, 10          
+// frontArms            motor_group   2, 7           
+// backArms             motor_group   12, 20         
+// ---- END VEXCODE CONFIGURED DEVICES ----
+ 
+#include "vex.h"
+ 
+using namespace vex;
+
+competition Competition;
+ 
+ 
+void pre_auton(void) {
+ // Initializing Robot Configuration. DO NOT REMOVE!
+ vexcodeInit();
+}
+ 
+/*---------------------------------------------------------------------------*/
+/*                                                                           */
+/*                              Autonomous Task                              */
+/*                                                                           */
+/*  This task is meant to complete an autonomous challenge by meeting all    */
+/*  set parameters; for this challenge we must move from the red starting    */
+/*  square and turn right to push the red mobile boal to the wall behind it, */
+/*  ending the task with having our robot end in the second red starting     */
+/*  square facing out towards the rings.                                     */
+/*---------------------------------------------------------------------------*/
+ 
+void autonomous(void) {
+ // ..........................................................................
+ frontArms.setStopping(hold);
+ frontArms.setTimeout(5, seconds);
+ Drivetrain.driveFor(forward, 15, inches);
+ Drivetrain.turnFor(right, 90, degrees);
+ Drivetrain.driveFor(forward, 75, inches);
+ Drivetrain.driveFor(reverse, 25, inches);
+ Drivetrain.turnFor(left, 90, degrees);
+ Drivetrain.driveFor(reverse, 20, inches);
+}
+ 
+void usercontrol(void) {
+ while (1) {
+   wait(20, msec);
+ }
+}
+
+int main() {
+ Competition.autonomous(autonomous);
+ Competition.drivercontrol(usercontrol);
+ 
+ // Run the pre-autonomous function.
+ pre_auton();
+ 
+ // Prevent main from exiting with an infinite loop.
+ while (true) {
+   wait(100, msec);
+ }
+}
