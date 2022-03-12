@@ -1,0 +1,38 @@
+drivetrain = Drivetrain()
+magnet = Electromagnet("magnet", 0)
+pen = Pen()
+brain = Brain()
+left_bumper = Bumper("leftBumper", 1)
+right_bumper = Bumper("rightBumper", 2)
+distance = Distance()
+front_eye = EyeSensor("fronteye", 3)
+down_eye = EyeSensor("downeye", 4)
+location = Location()
+
+#endregion VEXcode Generated Robot Configuration
+# ------------------------------------------
+# 
+# Project:      2s4 Dynamic Castle Crasher
+#	Author:       D.L.
+#	Created:      8 / 20 / 21
+#	Description:  Code is meant to complete the Dynamic Castle Crasher Playground to the specifications of Unit 9 Lesson 4
+# 
+# ------------------------------------------
+
+from vexcode import *
+
+def main(): 
+    brain.timer_time(SECONDS)
+    drivetrain.set_drive_velocity(100, PERCENT)
+    drivetrain.set_turn_velocity(100, PERCENT)
+    while True:
+        wait(5, MSEC)
+        while not down_eye.detect(RED):
+            wait(5, MSEC)
+            if distance.found_object(): 
+                drivetrain.drive(FORWARD)
+            else:
+                drivetrain.turn(RIGHT)
+        drivetrain.drive_for(REVERSE, 300, MM)
+        drivetrain.turn_for(RIGHT, 90, DEGREES)
+vr_thread(main())
